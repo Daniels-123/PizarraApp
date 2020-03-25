@@ -22,36 +22,36 @@ public class MainActivity extends AppCompatActivity {
 
 	private CanvasView canvas ;
 
-	private Button texto, undo, redo, negro, rojo;
+	private Button texto, undo, redo, negro, rojo, rectangulo, circulo, btnborrador, btnqu;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		canvas = findViewById(R.id.canvas);
-		canvas.setMode(CanvasView.Mode.DRAW);
 		texto = findViewById(R.id.btncolor);
 		undo = findViewById(R.id.btnundo);
 		redo = findViewById(R.id.btnredo);
 		negro = findViewById(R.id.btncambianegro);
 		rojo = findViewById(R.id.btncambiarojo);
-
+		rectangulo = findViewById(R.id.rectangulo);
+		circulo = findViewById(R.id.btncirculo);
+		btnborrador = findViewById(R.id.btnborrador);
+		btnqu = findViewById(R.id.btnqu);
 
 		texto.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				canvas.setMode(CanvasView.Mode.TEXT);
 
+// Setter
 
 				AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
 				builder.setTitle("Agregar nuevo texto");
 
-// Set up the input
 				final EditText input = new EditText(MainActivity.this);
-// Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
 				input.setInputType(InputType.TYPE_CLASS_TEXT);
 				builder.setView(input);
-
-// Set up the buttons
 				builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
 				});
 
 				builder.show();
-				canvas.setMode(CanvasView.Mode.DRAW);
+			//	canvas.setMode(CanvasView.Mode.DRAW);
 
 			}
 		});
@@ -93,15 +93,57 @@ public class MainActivity extends AppCompatActivity {
 		negro.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				canvas.setPaintStrokeWidth(3F);
+				canvas.setMode(CanvasView.Mode.DRAW);
+				canvas.setDrawer(CanvasView.Drawer.PEN);
 				canvas.setPaintStrokeColor(Color.BLACK);
 			}
 		});
 		rojo.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				canvas.setPaintStrokeWidth(3F);
+				canvas.setMode(CanvasView.Mode.DRAW);
+				canvas.setDrawer(CanvasView.Drawer.PEN);
 				canvas.setPaintStrokeColor(Color.RED);
 			}
 		});
+		rectangulo.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				canvas.setMode(CanvasView.Mode.DRAW);
+				canvas.setPaintStrokeColor(Color.BLACK);
+				canvas.setPaintStrokeWidth(3F);
+				canvas.setDrawer(CanvasView.Drawer.RECTANGLE);
+			}
+		});
+
+		circulo.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				canvas.setMode(CanvasView.Mode.DRAW);
+				canvas.setPaintStrokeColor(Color.BLACK);
+				canvas.setPaintStrokeWidth(3F);
+				canvas.setDrawer(CanvasView.Drawer.CIRCLE);
+			}
+		});
+		btnborrador.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				canvas.setMode(CanvasView.Mode.DRAW);
+				canvas.setDrawer(CanvasView.Drawer.PEN);
+				canvas.setPaintStrokeColor(Color.WHITE);
+				canvas.setPaintStrokeWidth(50F);
+			}
+		});
+		btnqu.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				canvas.setMode(CanvasView.Mode.DRAW);
+				canvas.setDrawer(CanvasView.Drawer.QUADRATIC_BEZIER);
+			}
+		});
+
 
 	}
 }
